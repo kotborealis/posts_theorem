@@ -13,6 +13,15 @@ export const BooleanFunction = function (output_values){
         throw new Error("Boolean function must have 2^n values!");
     }
 
+    for(let i = 0; i < values; i++){
+        if(!Number.isInteger(values[i])){
+            throw new Error("Boolean function must consist of integers!");
+        }
+        if(values[i] !== 0 || values[i] !== 1){
+            throw new Error("Wrong values for boolean function!");
+        }
+    }
+
     this.argc = argc;
 
     this.data = {};

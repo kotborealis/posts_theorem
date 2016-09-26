@@ -94,6 +94,7 @@ export const isFullSystem = function(booleanFunctions){
 
     booleanFunctions.forEach(booleanFunction => {
         const functionClasses = {
+            f: booleanFunction.toString(),
             isT0: isT0(booleanFunction),
             isT1: isT1(booleanFunction),
             isS: isS(booleanFunction),
