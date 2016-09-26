@@ -32,9 +32,9 @@ function testPostsClasses(filename){
 
 function testPostsCriterionFullSystem(filename){
     utils.loadJSONfromURL(filename, data => {
-        console.log(`%cPost's Criterion tests from file ${filename}`, testLogStyle.info);
+        console.log(`%cPost's Criterion tests for file ${filename}`, testLogStyle.info);
         const testData = data.functions.map(f => new BooleanFunction(f.f));
-        const result = PostTheorem.isFullSystem(testData);
+        const result = PostTheorem.isFullSystem(testData).isFullSystem;
         const expected = data.isFullSystem;
         const valid = result === expected;
 

@@ -82,7 +82,7 @@ export const isFullSystem = function(booleanFunctions){
         if(!(booleanFunctions[i] instanceof BooleanFunction))
             throw new Error("BooleanFunction instances array expected");
 
-    const PostsCriterion = {
+    const postsCriterion = {
         hasNotT0: false,
         hasNotT1: false,
         hasNotS: false,
@@ -90,19 +90,34 @@ export const isFullSystem = function(booleanFunctions){
         hasNotL: false
     };
 
+    const functionsClasses = [];
+
     booleanFunctions.forEach(booleanFunction => {
-        PostsCriterion.hasNotT0 = PostsCriterion.hasNotT0 || !isT0(booleanFunction);
-        PostsCriterion.hasNotT1 = PostsCriterion.hasNotT1 || !isT1(booleanFunction);
-        PostsCriterion.hasNotS = PostsCriterion.hasNotS || !isS(booleanFunction);
-        PostsCriterion.hasNotM = PostsCriterion.hasNotM || !isM(booleanFunction);
-        PostsCriterion.hasNotL = PostsCriterion.hasNotL || !isL(booleanFunction);
+        const functionClasses = {
+            isT0: isT0(booleanFunction),
+            isT1: isT1(booleanFunction),
+            isS: isS(booleanFunction),
+            isM: isM(booleanFunction),
+            isL: isL(booleanFunction)
+        };
+
+        postsCriterion.hasNotT0 = postsCriterion.hasNotT0 || !functionClasses.isT0;
+        postsCriterion.hasNotT1 = postsCriterion.hasNotT1 || !functionClasses.isT1;
+        postsCriterion.hasNotS = postsCriterion.hasNotS || !functionClasses.isS;
+        postsCriterion.hasNotM = postsCriterion.hasNotM || !functionClasses.isM;
+        postsCriterion.hasNotL = postsCriterion.hasNotL || !functionClasses.isL;
+
+        functionsClasses.push(functionClasses);
     });
 
-    return PostsCriterion.hasNotT0
-        && PostsCriterion.hasNotT1
-        && PostsCriterion.hasNotS
-        && PostsCriterion.hasNotM
-        && PostsCriterion.hasNotL;
+    return {
+        isFullSystem: postsCriterion.hasNotT0
+        && postsCriterion.hasNotT1
+        && postsCriterion.hasNotS
+        && postsCriterion.hasNotM
+        && postsCriterion.hasNotL,
+        functions: functionsClasses
+    };
 };
 
 function ZhegalkinReduceRow(row){
