@@ -1,12 +1,12 @@
-export const createBinaryString = function (num, length) {
+export const create = function (num, length) {
     return ('0'.repeat(length) + num.toString(2)).slice(-length);
 };
 
-export const invertBinaryString = function (string) {
+export const invert = function (string) {
     return string.split('').map(i => Number.parseInt(i)).map(i => Number(!i)).join('')
 };
 
-export const binaryStringLessOrEqual = function(l, r) {
+export const lessOrEqual = function(l, r) {
     if(l.length !== r.length)
         throw new Error("bad boolean strings");
 
@@ -27,6 +27,12 @@ export const binaryStringLessOrEqual = function(l, r) {
         return Number.parseInt(l[diff_pos]) < Number.parseInt(r[diff_pos]);
 };
 
-export const binaryStringSetAt = function(string, at, value) {
-    return string.substr(0, at) + value.toString() + string.substr(at+1);
+export const isZhegalkinPolynomialLinearMember = function(string) {
+    let _ = 0; //I dunno lol
+    string.split('').forEach(i => {
+        if(i === '1')
+            _++;
+    });
+
+    return _ < 2;
 };
