@@ -1,0 +1,50 @@
+[
+  {
+    "f": "00001111",
+    "isT0": true,
+    "isT1": true,
+    "isS": true,
+    "isM": true,
+    "isL": true
+  },
+  {
+    "f": "00010100",
+    "isT0": true,
+    "isT1": false,
+    "isS": false,
+    "isM": false,
+    "isL": false
+  },
+  {
+    "f": "11010100",
+    "isT0": false,
+    "isT1": false,
+    "isS": true,
+    "isM": false,
+    "isL": false
+  },
+  {
+    "f": "10000100",
+    "isT0": false,
+    "isT1": false,
+    "isS": false,
+    "isM": false,
+    "isL": false
+  },
+  {
+    "f": "00111100",
+    "isT0": true,
+    "isT1": false,
+    "isS": false,
+    "isM": false,
+    "isL": true
+  },
+  {
+    "f": "11010101",
+    "isT0": false,
+    "isT1": true,
+    "isS": false,
+    "isM": false,
+    "isL": false
+  }
+]

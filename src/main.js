@@ -32,3 +32,4 @@ function test(filename){
 }
 
 test('./test/set1.json');
+test('./test/set2.json');
