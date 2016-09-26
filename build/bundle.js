@@ -46,7 +46,7 @@
 
 	'use strict';
 	
-	var _test = __webpack_require__(5);
+	var _test = __webpack_require__(1);
 	
 	var Test = _interopRequireWildcard(_test);
 	
@@ -71,9 +71,73 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	exports.testPostsCriterionFullSystem = exports.testPostsClasses = undefined;
+	
+	var _BooleanFunction = __webpack_require__(2);
+	
+	var _PostTheorem = __webpack_require__(4);
+	
+	var PostTheorem = _interopRequireWildcard(_PostTheorem);
+	
+	var _utils = __webpack_require__(5);
+	
+	var utils = _interopRequireWildcard(_utils);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var testLogStyle = {
+	    error: 'background: #ffcccc; color: #0c0c0c;',
+	    success: 'background: #ccffcc; color: #0c0c0c;',
+	    info: 'background: #050505; color: #fcfcfc;'
+	};
+	
+	var testPostsClassesProps = ["isT0", "isT1", "isS", "isM", "isL"];
+	
+	var testPostsClasses = exports.testPostsClasses = function testPostsClasses(filename) {
+	    utils.loadJSONfromURL(filename, function (data) {
+	        console.log('%cPost\'s Classes tests from file ' + filename, testLogStyle.info);
+	        data.functions.forEach(function (testData) {
+	            console.log('%cPost\'s Classes test for function ' + testData.f, testLogStyle.info);
+	            testPostsClassesProps.forEach(function (p) {
+	                if (PostTheorem[p]) {
+	                    var testResult = {};
+	                    testResult.result = PostTheorem[p](new _BooleanFunction.BooleanFunction(testData.f));
+	                    testResult.expected = testData[p];
+	                    testResult.valid = testResult.result === testResult.expected;
+	
+	                    console.log('%c' + p + ': got ' + testResult.result + ', expected ' + testResult.expected, testResult.valid ? testLogStyle.success : testLogStyle.error);
+	                }
+	            });
+	        });
+	    });
+	};
+	
+	var testPostsCriterionFullSystem = exports.testPostsCriterionFullSystem = function testPostsCriterionFullSystem(filename) {
+	    utils.loadJSONfromURL(filename, function (data) {
+	        console.log('%cPost\'s Criterion tests for file ' + filename, testLogStyle.info);
+	        var testData = data.functions.map(function (f) {
+	            return new _BooleanFunction.BooleanFunction(f.f);
+	        });
+	        var result = PostTheorem.isFullSystem(testData).isFullSystem;
+	        var expected = data.isFullSystem;
+	        var valid = result === expected;
+	
+	        console.log('%cGot ' + result + ', expected ' + expected, valid ? testLogStyle.success : testLogStyle.error);
+	    });
+	};
+
+/***/ },
+/* 2 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
 	exports.BooleanFunction = undefined;
 	
-	var _BinaryString = __webpack_require__(2);
+	var _BinaryString = __webpack_require__(3);
 	
 	var BinaryString = _interopRequireWildcard(_BinaryString);
 	
@@ -122,7 +186,7 @@
 	    */
 
 /***/ },
-/* 2 */
+/* 3 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -169,7 +233,7 @@
 	};
 
 /***/ },
-/* 3 */
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -179,9 +243,9 @@
 	});
 	exports.isFullSystem = exports.isL = exports.isM = exports.isS = exports.isT1 = exports.isT0 = undefined;
 	
-	var _BooleanFunction = __webpack_require__(1);
+	var _BooleanFunction = __webpack_require__(2);
 	
-	var _BinaryString = __webpack_require__(2);
+	var _BinaryString = __webpack_require__(3);
 	
 	var BinaryString = _interopRequireWildcard(_BinaryString);
 	
@@ -299,7 +363,7 @@
 	}
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -320,78 +384,14 @@
 	};
 
 /***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.testPostsCriterionFullSystem = exports.testPostsClasses = undefined;
-	
-	var _BooleanFunction = __webpack_require__(1);
-	
-	var _PostTheorem = __webpack_require__(3);
-	
-	var PostTheorem = _interopRequireWildcard(_PostTheorem);
-	
-	var _utils = __webpack_require__(4);
-	
-	var utils = _interopRequireWildcard(_utils);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	var testLogStyle = {
-	    error: 'background: #ffcccc; color: #0c0c0c;',
-	    success: 'background: #ccffcc; color: #0c0c0c;',
-	    info: 'background: #050505; color: #fcfcfc;'
-	};
-	
-	var testPostsClassesProps = ["isT0", "isT1", "isS", "isM", "isL"];
-	
-	var testPostsClasses = exports.testPostsClasses = function testPostsClasses(filename) {
-	    utils.loadJSONfromURL(filename, function (data) {
-	        console.log('%cPost\'s Classes tests from file ' + filename, testLogStyle.info);
-	        data.functions.forEach(function (testData) {
-	            console.log('%cPost\'s Classes test for function ' + testData.f, testLogStyle.info);
-	            testPostsClassesProps.forEach(function (p) {
-	                if (PostTheorem[p]) {
-	                    var testResult = {};
-	                    testResult.result = PostTheorem[p](new _BooleanFunction.BooleanFunction(testData.f));
-	                    testResult.expected = testData[p];
-	                    testResult.valid = testResult.result === testResult.expected;
-	
-	                    console.log('%c' + p + ': got ' + testResult.result + ', expected ' + testResult.expected, testResult.valid ? testLogStyle.success : testLogStyle.error);
-	                }
-	            });
-	        });
-	    });
-	};
-	
-	var testPostsCriterionFullSystem = exports.testPostsCriterionFullSystem = function testPostsCriterionFullSystem(filename) {
-	    utils.loadJSONfromURL(filename, function (data) {
-	        console.log('%cPost\'s Criterion tests for file ' + filename, testLogStyle.info);
-	        var testData = data.functions.map(function (f) {
-	            return new _BooleanFunction.BooleanFunction(f.f);
-	        });
-	        var result = PostTheorem.isFullSystem(testData).isFullSystem;
-	        var expected = data.isFullSystem;
-	        var valid = result === expected;
-	
-	        console.log('%cGot ' + result + ', expected ' + expected, valid ? testLogStyle.success : testLogStyle.error);
-	    });
-	};
-
-/***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	var _BooleanFunction = __webpack_require__(1);
+	var _BooleanFunction = __webpack_require__(2);
 	
-	var _PostTheorem = __webpack_require__(3);
+	var _PostTheorem = __webpack_require__(4);
 	
 	var PostTheorem = _interopRequireWildcard(_PostTheorem);
 	
