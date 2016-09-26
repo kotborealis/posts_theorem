@@ -1,50 +1,53 @@
-[
-  {
-    "f": "00010011",
-    "isT0": true,
-    "isT1": true,
-    "isS": false,
-    "isM": true,
-    "isL": false
-  },
-  {
-    "f": "00001111",
-    "isT0": true,
-    "isT1": true,
-    "isS": true,
-    "isM": true,
-    "isL": true
-  },
-  {
-    "f": "00101001",
-    "isT0": true,
-    "isT1": true,
-    "isS": false,
-    "isM": false,
-    "isL": false
-  },
-  {
-    "f": "11011110",
-    "isT0": false,
-    "isT1": false,
-    "isS": false,
-    "isM": false,
-    "isL": false
-  },
-  {
-    "f": "11010001",
-    "isT0": false,
-    "isT1": true,
-    "isS": false,
-    "isM": false,
-    "isL": false
-  },
-  {
-    "f": "01100110",
-    "isT0": true,
-    "isT1": false,
-    "isS": false,
-    "isM": false,
-    "isL": true
-  }
-]
+{
+  "isFullSystem": true,
+  "functions": [
+    {
+      "f": "00010011",
+      "isT0": true,
+      "isT1": true,
+      "isS": false,
+      "isM": true,
+      "isL": false
+    },
+    {
+      "f": "00001111",
+      "isT0": true,
+      "isT1": true,
+      "isS": true,
+      "isM": true,
+      "isL": true
+    },
+    {
+      "f": "00101001",
+      "isT0": true,
+      "isT1": true,
+      "isS": false,
+      "isM": false,
+      "isL": false
+    },
+    {
+      "f": "11011110",
+      "isT0": false,
+      "isT1": false,
+      "isS": false,
+      "isM": false,
+      "isL": false
+    },
+    {
+      "f": "11010001",
+      "isT0": false,
+      "isT1": true,
+      "isS": false,
+      "isM": false,
+      "isL": false
+    },
+    {
+      "f": "01100110",
+      "isT0": true,
+      "isT1": false,
+      "isS": false,
+      "isM": false,
+      "isL": true
+    }
+  ]
+}

@@ -74,6 +74,37 @@ export const isL = function(booleanFunction){
     return linearPolynomial;
 };
 
+export const isFullSystem = function(booleanFunctions){
+    if(!Array.isArray(booleanFunctions))
+        throw new Error("Array expected");
+
+    for(let i = 0; i < booleanFunctions.length; i++)
+        if(!(booleanFunctions[i] instanceof BooleanFunction))
+            throw new Error("BooleanFunction instances array expected");
+
+    const PostsCriterion = {
+        hasNotT0: false,
+        hasNotT1: false,
+        hasNotS: false,
+        hasNotM: false,
+        hasNotL: false
+    };
+
+    booleanFunctions.forEach(booleanFunction => {
+        PostsCriterion.hasNotT0 = PostsCriterion.hasNotT0 || !isT0(booleanFunction);
+        PostsCriterion.hasNotT1 = PostsCriterion.hasNotT1 || !isT1(booleanFunction);
+        PostsCriterion.hasNotS = PostsCriterion.hasNotS || !isS(booleanFunction);
+        PostsCriterion.hasNotM = PostsCriterion.hasNotM || !isM(booleanFunction);
+        PostsCriterion.hasNotL = PostsCriterion.hasNotL || !isL(booleanFunction);
+    });
+
+    return PostsCriterion.hasNotT0
+        && PostsCriterion.hasNotT1
+        && PostsCriterion.hasNotS
+        && PostsCriterion.hasNotM
+        && PostsCriterion.hasNotL;
+};
+
 function ZhegalkinReduceRow(row){
     const reduced = [];
     for(let i = 0; i < row.length - 1; i++)
