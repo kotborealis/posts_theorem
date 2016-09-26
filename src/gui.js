@@ -4,9 +4,8 @@ import * as PostTheorem from './PostTheorem';
 const input = document.getElementById("_input");
 const output = document.getElementById("_output");
 
-input.onkeydown = function(event){
-    if(event.keyCode == 13)
-        processInput(input.value);
+input.onkeyup = function(event){
+    processInput(input.value);
 };
 
 const processInput = function(value){
@@ -24,7 +23,7 @@ const processInput = function(value){
         catch(e){
             output.innerHTML = `
                 <div style="color: red;">
-                    Error: ${e}
+                    ${e}
                 </div>
             `;
             return;
@@ -34,3 +33,5 @@ const processInput = function(value){
     const data = PostTheorem.isFullSystem(functions);
     output.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
 };
+
+processInput('');

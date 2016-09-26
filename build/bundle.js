@@ -92,11 +92,11 @@
 	        throw new Error("Boolean function must have 2^n values!");
 	    }
 	
-	    for (var i = 0; i < values; i++) {
+	    for (var i = 0; i < values.length; i++) {
 	        if (!Number.isInteger(values[i])) {
 	            throw new Error("Boolean function must consist of integers!");
 	        }
-	        if (values[i] !== 0 || values[i] !== 1) {
+	        if (values[i] !== 0 && values[i] !== 1) {
 	            throw new Error("Wrong values for boolean function!");
 	        }
 	    }
@@ -400,8 +400,8 @@
 	var input = document.getElementById("_input");
 	var output = document.getElementById("_output");
 	
-	input.onkeydown = function (event) {
-	    if (event.keyCode == 13) processInput(input.value);
+	input.onkeyup = function (event) {
+	    processInput(input.value);
 	};
 	
 	var processInput = function processInput(value) {
@@ -415,7 +415,7 @@
 	        try {
 	            functions.push(new _BooleanFunction.BooleanFunction(lines[i]));
 	        } catch (e) {
-	            output.innerHTML = '\n                <div style="color: red;">\n                    Error: ' + e + '\n                </div>\n            ';
+	            output.innerHTML = '\n                <div style="color: red;">\n                    ' + e + '\n                </div>\n            ';
 	            return;
 	        }
 	    }
@@ -423,6 +423,8 @@
 	    var data = PostTheorem.isFullSystem(functions);
 	    output.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
 	};
+	
+	processInput('');
 
 /***/ }
 /******/ ]);
