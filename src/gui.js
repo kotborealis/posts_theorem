@@ -32,5 +32,5 @@ const processInput = function(value){
     }
 
     const data = PostTheorem.isFullSystem(functions);
-    output.innerHTML = `<pre>${JSON.stringify(data, null, 2)}$</pre>`;
+    output.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
 };

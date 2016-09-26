@@ -6,11 +6,15 @@
 }
 #_input, #_output{
     height: 40vh;
-    width: 100%;
+    width: 600px;
     padding: 5px;
     margin: 5px;
     border: 0px;
     resize: none;
     font-family: monospace;
     border: 1px dashed whitesmoke;
+}
+
+#_output{
+    overflow: auto;
 }
