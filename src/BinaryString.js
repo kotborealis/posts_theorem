@@ -19,20 +19,12 @@ export const lessOrEqual = function(l, r) {
         }
     }
 
-    if(diffs > 1)
-        return null;
-    if(diffs === 0)
-        return null;
     if(diffs === 1)
         return Number.parseInt(l[diff_pos]) < Number.parseInt(r[diff_pos]);
+    else
+        return null;
 };
 
 export const isZhegalkinPolynomialLinearMember = function(string) {
-    let _ = 0; //I dunno lol
-    string.split('').forEach(i => {
-        if(i === '1')
-            _++;
-    });
-
-    return _ < 2;
+    return string.indexOf('1') === string.lastIndexOf('1');
 };
