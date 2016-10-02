@@ -106,9 +106,9 @@
 	});
 	exports.BooleanFunction = undefined;
 	
-	var _ByteNumber = __webpack_require__(3);
+	var _BitNumber = __webpack_require__(3);
 	
-	var _ByteNumber2 = _interopRequireDefault(_ByteNumber);
+	var _BitNumber2 = _interopRequireDefault(_BitNumber);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -133,7 +133,7 @@
 	    }
 	
 	    this.argc = argc;
-	    this.value = new _ByteNumber2.default(Number.parseInt(values.join(''), 2), Math.pow(2, this.argc));
+	    this.value = new _BitNumber2.default(Number.parseInt(values.join(''), 2), Math.pow(2, this.argc));
 	
 	    this.toString = function () {
 	        return values.join('');
@@ -217,9 +217,9 @@
 	
 	var _BooleanFunction = __webpack_require__(2);
 	
-	var _ByteNumber = __webpack_require__(3);
+	var _BitNumber = __webpack_require__(3);
 	
-	var _ByteNumber2 = _interopRequireDefault(_ByteNumber);
+	var _BitNumber2 = _interopRequireDefault(_BitNumber);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -255,8 +255,8 @@
 	
 	    for (var i = 0; i < booleanFunction.value.length; i++) {
 	        for (var j = 0; j < booleanFunction.value.length; j++) {
-	            var l = new _ByteNumber2.default(i, booleanFunction.argc);
-	            var r = new _ByteNumber2.default(j, booleanFunction.argc);
+	            var l = new _BitNumber2.default(i, booleanFunction.argc);
+	            var r = new _BitNumber2.default(j, booleanFunction.argc);
 	            var less_or_equal = l.lessOrEqual(r);
 	
 	            if (less_or_equal && !(booleanFunction.value.byte(i) <= booleanFunction.value.byte(j))) return false;
