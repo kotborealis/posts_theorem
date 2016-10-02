@@ -46,21 +46,11 @@
 
 	'use strict';
 	
-	var _test = __webpack_require__(1);
-	
-	var Test = _interopRequireWildcard(_test);
-	
-	var _gui = __webpack_require__(6);
+	var _gui = __webpack_require__(1);
 	
 	var GUI = _interopRequireWildcard(_gui);
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	Test.testPostsClasses('./test/set1.json');
-	Test.testPostsClasses('./test/set2.json');
-	
-	Test.testPostsCriterionFullSystem('./test/set1.json');
-	Test.testPostsCriterionFullSystem('./test/set2.json');
 
 /***/ },
 /* 1 */
@@ -68,63 +58,42 @@
 
 	'use strict';
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	exports.testPostsCriterionFullSystem = exports.testPostsClasses = undefined;
-	
 	var _BooleanFunction = __webpack_require__(2);
 	
 	var _PostTheorem = __webpack_require__(4);
 	
 	var PostTheorem = _interopRequireWildcard(_PostTheorem);
 	
-	var _utils = __webpack_require__(5);
-	
-	var utils = _interopRequireWildcard(_utils);
-	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
-	var testLogStyle = {
-	    error: 'background: #ffcccc; color: #0c0c0c;',
-	    success: 'background: #ccffcc; color: #0c0c0c;',
-	    info: 'background: #050505; color: #fcfcfc;'
+	var input = document.getElementById("_input");
+	var output = document.getElementById("_output");
+	
+	input.onkeyup = function (event) {
+	    processInput(input.value);
 	};
 	
-	var testPostsClassesProps = ["isT0", "isT1", "isS", "isM", "isL"];
+	var processInput = function processInput(value) {
+	    output.innerHTML = '';
+	    var lines = value.split('\n');
+	    var functions = [];
 	
-	var testPostsClasses = exports.testPostsClasses = function testPostsClasses(filename) {
-	    utils.loadJSONfromURL(filename, function (data) {
-	        console.log('%cPost\'s Classes tests from file ' + filename, testLogStyle.info);
-	        data.functions.forEach(function (testData) {
-	            console.log('%cPost\'s Classes test for function ' + testData.f, testLogStyle.info);
-	            testPostsClassesProps.forEach(function (p) {
-	                if (PostTheorem[p]) {
-	                    var testResult = {};
-	                    testResult.result = PostTheorem[p](new _BooleanFunction.BooleanFunction(testData.f));
-	                    testResult.expected = testData[p];
-	                    testResult.valid = testResult.result === testResult.expected;
+	    for (var i = 0; i < lines.length; i++) {
+	        if (lines[i] === '') continue;
 	
-	                    console.log('%c' + p + ': got ' + testResult.result + ', expected ' + testResult.expected, testResult.valid ? testLogStyle.success : testLogStyle.error);
-	                }
-	            });
-	        });
-	    });
+	        try {
+	            functions.push(new _BooleanFunction.BooleanFunction(lines[i]));
+	        } catch (e) {
+	            output.innerHTML = '\n                <div style="color: red;">\n                    ' + e + '\n                </div>\n            ';
+	            return;
+	        }
+	    }
+	
+	    var data = PostTheorem.isFullSystem(functions);
+	    output.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
 	};
 	
-	var testPostsCriterionFullSystem = exports.testPostsCriterionFullSystem = function testPostsCriterionFullSystem(filename) {
-	    utils.loadJSONfromURL(filename, function (data) {
-	        console.log('%cPost\'s Criterion tests for file ' + filename, testLogStyle.info);
-	        var testData = data.functions.map(function (f) {
-	            return new _BooleanFunction.BooleanFunction(f.f);
-	        });
-	        var result = PostTheorem.isFullSystem(testData).isFullSystem;
-	        var expected = data.isFullSystem;
-	        var valid = result === expected;
-	
-	        console.log('%cGot ' + result + ', expected ' + expected, valid ? testLogStyle.success : testLogStyle.error);
-	    });
-	};
+	processInput('');
 
 /***/ },
 /* 2 */
@@ -361,70 +330,6 @@
 	        reduced.push((row[i] + row[i + 1]) % 2);
 	    }return reduced;
 	}
-
-/***/ },
-/* 5 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var loadJSONfromURL = exports.loadJSONfromURL = function loadJSONfromURL(url, callback) {
-	    var _ = new XMLHttpRequest();
-	    _.overrideMimeType("application/json");
-	    _.open('GET', url, true);
-	    _.onreadystatechange = function () {
-	        if (_.readyState == 4 && _.status == "200") {
-	            callback(JSON.parse(_.responseText));
-	        }
-	    };
-	    _.send(null);
-	};
-
-/***/ },
-/* 6 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _BooleanFunction = __webpack_require__(2);
-	
-	var _PostTheorem = __webpack_require__(4);
-	
-	var PostTheorem = _interopRequireWildcard(_PostTheorem);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	var input = document.getElementById("_input");
-	var output = document.getElementById("_output");
-	
-	input.onkeyup = function (event) {
-	    processInput(input.value);
-	};
-	
-	var processInput = function processInput(value) {
-	    output.innerHTML = '';
-	    var lines = value.split('\n');
-	    var functions = [];
-	
-	    for (var i = 0; i < lines.length; i++) {
-	        if (lines[i] === '') continue;
-	
-	        try {
-	            functions.push(new _BooleanFunction.BooleanFunction(lines[i]));
-	        } catch (e) {
-	            output.innerHTML = '\n                <div style="color: red;">\n                    ' + e + '\n                </div>\n            ';
-	            return;
-	        }
-	    }
-	
-	    var data = PostTheorem.isFullSystem(functions);
-	    output.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
-	};
-	
-	processInput('');
 
 /***/ }
 /******/ ]);
