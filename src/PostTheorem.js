@@ -3,30 +3,29 @@
  */
 
 import {BooleanFunction} from "./BooleanFunction";
-import * as BinaryString from "./BinaryString";
+import ByteNumber from './BitNumber';
 
 export const isT0 = function(booleanFunction){
     if(!(booleanFunction instanceof BooleanFunction))
         throw new Error("BooleanFunction instance expected, got "+JSON.stringify(booleanFunction));
 
-    return booleanFunction.data.values[0] === 0;
+    return booleanFunction.value.byte(0) === 0;
 };
 
 export const isT1 = function(booleanFunction){
     if(!(booleanFunction instanceof BooleanFunction))
         throw new Error("BooleanFunction instance expected");
 
-    return booleanFunction.data.values[booleanFunction.data.values.length - 1] === 1;
+    return booleanFunction.value.byte(booleanFunction.value.length - 1) === 1;
 };
 
 export const isS = function(booleanFunction){
     if(!(booleanFunction instanceof BooleanFunction))
         throw new Error("BooleanFunction instance expected");
 
-    for(let i = 0; i < booleanFunction.data.values.length/2; i++){
-        const i_bin = BinaryString.create(i, booleanFunction.argc);
-        const l = booleanFunction.data.binaryString[i_bin];
-        const r = booleanFunction.data.binaryString[BinaryString.invert(i_bin)];
+    for(let i = 0; i < booleanFunction.value.length/2; i++){
+        const l = booleanFunction.value.byte(i);
+        const r = booleanFunction.value.byte(i, true);
         if(l === r)
             return false;
     }
@@ -37,14 +36,14 @@ export const isM = function(booleanFunction){
     if(!(booleanFunction instanceof BooleanFunction))
         throw new Error("BooleanFunction instance expected");
 
-    for(let i = 0; i < booleanFunction.data.values.length; i++){
-        for(let j = 0; j < booleanFunction.data.values.length; j++){
-            const l = BinaryString.create(i, booleanFunction.argc);
-            const r = BinaryString.create(j, booleanFunction.argc);
-            const less_or_equal = BinaryString.lessOrEqual(l, r);
+    for(let i = 0; i < booleanFunction.value.length; i++){
+        for(let j = 0; j < booleanFunction.value.length; j++){
+            const l = new ByteNumber(i, booleanFunction.argc);
+            const r = new ByteNumber(j, booleanFunction.argc);
+            const less_or_equal = l.lessOrEqual(r);
 
-            if(less_or_equal && !(booleanFunction.data.values[i] <= booleanFunction.data.values[j]))
-                return false;
+            if(less_or_equal && !(booleanFunction.value.byte(i) <= booleanFunction.value.byte(j)))
+                    return false;
         }
     }
 
@@ -56,7 +55,7 @@ export const isL = function(booleanFunction){
         throw new Error("BooleanFunction instance expected");
 
     let ZhegalkinRows = [];
-    ZhegalkinRows.push(booleanFunction.data.values);
+    ZhegalkinRows.push(booleanFunction.value.map(b => b));
 
     for(let reduced = ZhegalkinReduceRow(ZhegalkinRows[0]);
         reduced.length > 0;
@@ -67,7 +66,7 @@ export const isL = function(booleanFunction){
 
     let linearPolynomial = true;
     ZhegalkinPolynomial.forEach((member, i) => {
-        if(member && !BinaryString.isZhegalkinPolynomialLinearMember(BinaryString.create(i, booleanFunction.argc)))
+        if(member && i !== 0 && !Number.isInteger(Math.log2(i)))
             linearPolynomial = false;
     });
 

@@ -2,7 +2,7 @@
  * Created by kotborealis on 26.09.2016.
  */
 
-import * as BinaryString from './BinaryString';
+import ByteNumber from './BitNumber';
 
 export const BooleanFunction = function (output_values){
     //constructor
@@ -23,17 +23,7 @@ export const BooleanFunction = function (output_values){
     }
 
     this.argc = argc;
-
-    this.data = {};
-    this.data.values = values;
-    this.data.binaryString = {};
-    for(let i = 0; i < values.length; i++)
-        this.data.binaryString[BinaryString.create(i, this.argc)] = this.data.values[i];
-
-    this.forEach = (callback) => {
-        for(let i = 0; i < this.data.values.length; i++)
-            callback(this.data.values[i], BinaryString.create(i, this.argc));
-    };
+    this.value = new ByteNumber(Number.parseInt(values.join(''), 2), Math.pow(2, this.argc));
 
     this.toString = () => values.join('');
 };
