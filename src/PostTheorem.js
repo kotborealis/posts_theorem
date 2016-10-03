@@ -37,7 +37,7 @@ export const isM = function(booleanFunction){
         throw new Error("BooleanFunction instance expected");
 
     for(let i = 0; i < booleanFunction.value.length; i++){
-        for(let j = i; j < booleanFunction.value.length; j++){
+        for(let j = 0; j < booleanFunction.value.length; j++){
             const l = new ByteNumber(i, booleanFunction.argc);
             const r = new ByteNumber(j, booleanFunction.argc);
             const less_or_equal = l.lessOrEqual(r);
