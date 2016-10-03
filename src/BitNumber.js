@@ -25,28 +25,4 @@ export default function(num, _length){
     this.equal = n => {
         return n.value === this.value;
     };
-
-    this.lessOrEqual = byteNumber => {
-        if(this.length !== byteNumber.length)
-            throw new Error("Bad arg");
-
-        let diffs = 0;
-        let diff_pos = -1;
-        for(let i = 0; i < this.length; i++){
-            const l = this.byte(i);
-            const r = byteNumber.byte(i);
-            if(l !== r){
-                diffs++;
-                diff_pos = i;
-                if(diffs > 1){
-                    return null;
-                }
-            }
-        }
-
-        if(diffs === 0)
-            return null;
-        if(diffs === 1)
-            return this.byte(diff_pos) < byteNumber.byte(diff_pos);
-    };
 };

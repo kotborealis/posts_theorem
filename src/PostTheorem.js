@@ -38,12 +38,9 @@ export const isM = function(booleanFunction){
 
     for(let i = 0; i < booleanFunction.value.length; i++){
         for(let j = i+1; j < booleanFunction.value.length; j++){
-            const l = new ByteNumber(i, booleanFunction.argc);
-            const r = new ByteNumber(j, booleanFunction.argc);
-            const less_or_equal = l.lessOrEqual(r);
-
-            if(less_or_equal && !(booleanFunction.value.byte(i) <= booleanFunction.value.byte(j)))
-                    return false;
+            if((i | j) === j && booleanFunction.value.byte(i) > booleanFunction.value.byte(j)){
+                return false;
+            }
         }
     }
 
@@ -123,7 +120,7 @@ export const isFullSystem = function(booleanFunctions){
 function ZhegalkinReduceRow(row){
     const reduced = [];
     for(let i = 0; i < row.length - 1; i++)
-        reduced.push((row[i] + row[i+1])%2);
+        reduced.push(row[i] ^ row[i+1]);
 
     return reduced;
 }
